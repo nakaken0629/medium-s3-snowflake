@@ -1,4 +1,4 @@
-resource "snowflake_storage_integration" "mysite" {
+resource "snowflake_storage_integration" "my_integration" {
   type                      = "EXTERNAL_STAGE"
   storage_provider          = "S3"
   enabled                   = true

@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "snowflake" {
     condition {
       test     = "StringEquals"
       variable = "sts:ExternalId"
-      values   = [snowflake_storage_integration.mysite.storage_aws_external_id]
+      values   = [snowflake_storage_integration.my_integration.storage_aws_external_id]
     }
   }
 }
