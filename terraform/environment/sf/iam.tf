@@ -1,6 +1,4 @@
 import {
-  # provider = aws
-
   to = aws_iam_role.snowflake
   id = data.terraform_remote_state.base.outputs.role_snowflake_id
 }

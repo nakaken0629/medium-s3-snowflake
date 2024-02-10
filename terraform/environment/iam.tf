@@ -45,7 +45,7 @@ resource "aws_iam_role" "snowflake" {
   assume_role_policy = data.aws_iam_policy_document.snowflake.json
 
   lifecycle {
-    ignore_changes = [assume_role_policy]   # sfフォルダで上書きされるので、変更監視しない
+    ignore_changes = [assume_role_policy]   # ignore changing which is created by the operation at the sub directory
   }
 }
 
