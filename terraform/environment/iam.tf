@@ -22,18 +22,20 @@ resource "aws_iam_policy" "s3_read" {
   policy = data.aws_iam_policy_document.s3_read.json
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "snowflake" {
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
     principals {
       type        = "AWS"
-      identifiers = [snowflake_storage_integration.mysite.storage_aws_iam_user_arn]
+      identifiers = [data.aws_caller_identity.current.id]   # set dummy value
     }
     condition {
       test     = "StringEquals"
       variable = "sts:ExternalId"
-      values   = [snowflake_storage_integration.my_integration.storage_aws_external_id]
+      values   = ["xxxxxxxx"]   # set dummy value
     }
   }
 }
@@ -41,6 +43,10 @@ data "aws_iam_policy_document" "snowflake" {
 resource "aws_iam_role" "snowflake" {
   name               = "my-role-snowflake"
   assume_role_policy = data.aws_iam_policy_document.snowflake.json
+
+  lifecycle {
+    ignore_changes = [assume_role_policy]   # sfフォルダで上書きされるので、変更監視しない
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "s3_read_for_snowflake" {
